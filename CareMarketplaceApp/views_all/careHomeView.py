@@ -80,25 +80,44 @@ def careHomeSearch(request):
             
             # careTypes = getListOfCareTypes()
             # print(careTypes)
-            locations = [
-            {'name': 'Location 1', 'latitude': 51.505, 'longitude': -0.09},
-            {'name': 'Location 2', 'latitude': 51.51, 'longitude': -0.1},
-            {'name': 'Location 3', 'latitude': 51.52, 'longitude': -0.11},
-            ]
+          
             print('Caregiver final')
             print(careGiversFound)
+
+            locations = []
+    # Iterate through profiles to create location dictionary for each profile
+            for profile in careGiversFound:
+                # Check if both latitude and longitude are not None
+                if profile.postCodeLatitude is not None and profile.postCodeLongitude is not None:
+                    location = {
+                        'name': profile.first_name,
+                        'latitude': float(profile.postCodeLatitude),
+                        'longitude': float(profile.postCodeLongitude)
+                    }
+                
+                locations.append(location)
+            print ('locations')
+            print (location)
             return render(request, 'careHomeSearch.html', {'locations': locations, 'careGivers': careGiversFound, 'form': form}) 
               
         else:
             messages.error(request, 'One or more fields are not Valid!')
             form = CareHomeSearchForm(request.POST)
-             
-            return render(request, 'careHomeSearch.html', {'form':form}) 
+            locations = [
+            {'name': 'Location 1', 'latitude': 51.505, 'longitude': -0.09},
+            {'name': 'Location 2', 'latitude': 51.51, 'longitude': -0.1},
+            {'name': 'Location 3', 'latitude': 51.52, 'longitude': -0.11},
+            ]
+            return render(request, 'careHomeSearch.html', {'locations': locations, 'form': form}) 
             
     else:
-
+        locations = [
+            {'name': 'Location 1', 'latitude': 51.505, 'longitude': -0.09},
+            {'name': 'Location 2', 'latitude': 51.51, 'longitude': -0.1},
+            {'name': 'Location 3', 'latitude': 51.52, 'longitude': -0.11},
+            ]
         form = CareHomeSearchForm()
-        return render(request, 'careHomeSearch.html', {'form':form}) 
+        return render(request, 'careHomeSearch.html', {'locations': locations,  'form': form}) 
 
 
 

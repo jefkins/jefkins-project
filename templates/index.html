@@ -13,6 +13,11 @@
   <!-- Favicons -->
   <link href="{% static 'assets/img/favicon.png'" rel="icon">
   <link href="{% static 'assets/img/apple-touch-icon.png'" rel="apple-touch-icon">
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+<!-- Leaflet JavaScript -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -141,6 +146,25 @@
      -->
     
 
+
+  <div>
+    <div id="map" style="height: 400px;"></div>
+
+    <script>
+        var map = L.map('map').setView([51.505, -0.09], 13);
+    
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+    
+        // Loop through locations and add markers to the map
+        {% for location in locations %}
+        L.marker([{{ location.latitude }}, {{ location.longitude }}]).addTo(map)
+            .bindPopup("{{ location.name }}");
+        {% endfor %}
+    </script>
+
+  </div>
    
   </main><!-- End #main -->
 

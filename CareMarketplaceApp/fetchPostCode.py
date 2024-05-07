@@ -4,9 +4,9 @@ from .postCodeResponse import  PostCodeResponse
 
 def get_address_details_from_postcode(postcode):
 
-    url2 = f'https://api.postcodes.io/postcodes/{postcode}'
-    url = f'https://nominatim.openstreetmap.org/search?postalcode={postcode}&format=json'
-    response = requests.get(url2)
+    url = f'https://api.postcodes.io/postcodes/{postcode}'
+    #url = f'https://nominatim.openstreetmap.org/search?postalcode={postcode}&format=json'
+    response = requests.get(url)
     response.raise_for_status()  # Raise an exception for 4xx or 5xx errors
     print(response)
     if response.status_code == 200:
@@ -16,10 +16,11 @@ def get_address_details_from_postcode(postcode):
             results = data.get('result')
             lon = results.get('longitude')
             lat = results.get('latitude')
+            address = results.get ('primary_care_trust')
             country = results.get('country')
             state = results.get('region')
             city = results.get('parish')
-            formatted_address = state + city 
+            formatted_address = address + state + city 
             # Extract address details from the first result
             # address_details = data[0]
             # formatted_address = address_details.get('display_name', 'Address details not found')
