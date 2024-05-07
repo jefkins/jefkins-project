@@ -1,0 +1,160 @@
+{% extends 'CareHomeDashboardTemplate.html' %}
+
+{% block Header %}
+ 
+{% endblock %}
+
+{% block PageContent %}
+<!-- <main class="content-wrapper">
+
+    <div id="map"></div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+var map = L.map('map').setView([51.505, -0.09], 13);  // Initialize map with default center and zoom level
+
+// Add tile layer (optional)
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+}).addTo(map);
+
+// Add markers for each manually created location
+var locations = {{ locations|safe }};  // Pass locations from Django view
+locations.forEach(function(location) {
+    var marker = L.marker([location.latitude, location.longitude]).addTo(map);
+    // Add popup (optional)
+    marker.bindPopup(location.name);
+});
+</script>
+  
+ 
+</main>
+
+<main class="content-wrapper">
+  <div class="mdc-layout-grid">
+    <div class="mdc-layout-grid__inner">
+      <div class="mdc-layout-grid__cell--span-12">
+        <div class="mdc-card">
+          {% if user.is_authenticated %}
+
+          <h6>Welcome {{user.username}} to your Care Home Dashboard</h4>
+
+            {% endif %}
+
+        </div>
+ -->
+
+
+ <main class="content-wrapper">
+  <div class="mdc-layout-grid">
+    
+
+ <div class="card">
+  <h5 class="card-header">Book Care Giver</h5>
+  <div class="card-body">
+    <p class="card-title">Booking</p>
+    <!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+     -->
+
+   
+     {% if form.errors %}
+     <div class="alert alert-danger">
+         <strong>Error!</strong> Please correct the following errors:
+         <ul>
+             {% for field, errors in form.errors.items %}
+                 {% for error in errors %}
+                     <li>{{ error }}</li>
+                 {% endfor %}
+             {% endfor %}
+         </ul>
+     </div>
+ {% endif %}
+  
+  </div>
+
+  <!-- <a href="#" class="btn btn-primary">Go back to Dashboard</a> -->
+</div>
+ 
+ 
+
+<div class="row">
+  {% if careGivers is None %}
+
+  <p class="text-danger">No Care Givers found!</p>
+  {% endif %}
+  {% for caregiver in careGivers %}  
+<div class="card col-lg-3">
+  <img src="..." class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">{{caregiver.first_name}} {{caregiver.last_name}}</h5>
+    <p>Bio</p>
+    <p class="card-text">  {{caregiver.first_name}}</p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item"><Address>Address:{{caregiver.address}} </Address>
+    <br> Post Code: {{caregiver.postcode}}</li>
+    <li class="list-group-item">Email: {{caregiver.email}}</li>
+    <li class="list-group-item">Phone: {{caregiver.primary_phone_number}}</li>
+  </ul>
+  <div class="card-body">
+    <a href="bookCareGiver/{{caregiver.userAuth_id}}" class="card-link">Booked</a>
+  </div>
+</div>
+{% endfor %}
+
+</div>
+   
+
+    
+  </div>
+ </main>
+
+ 
+<!-- 
+
+ {% for caregiver in careGivers %}
+ <div class="mdc-layout-grid">
+  <h4>List of Care Givers</h4>
+ <div class="mdc-layout-grid__inner">
+  <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-4-tablet">
+    <div class="mdc-card info-card info-card--success">
+      <div class="card-inner">
+        <h5 class="card-title">Name: {{caregiver.first_name}}</h5>
+        <h5 class="font-weight-light pb-2 mb-1 border-bottom">Email: {{caregiver.email}}</h5>
+        <h5 class="font-weight-light pb-2 mb-1 border-bottom">Phone: {{caregiver.primary_phone_number}}</h5>
+        <h5 class="font-weight-light pb-2 mb-1 border-bottom">Address: {{caregiver.postCodeAddress}}</h5>
+        <hr>
+        <h5 class="font-weight-light pb-2 mb-1 border-bottom">Care Experience: </h5>
+        
+        <p class="tx-12 text-muted">Availability: {{caregiver.email}}</p>
+         <button>Contact</button>
+      </div>
+    </div>
+  </div>
+ </div>
+ </div>
+ {% endfor %} -->
+
+        
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+      
+ 
+         
+
+        
+
+
+
+
+     
+      </div>
+    </div>
+  </div>
+  </div>
+</main> 
+{% endblock %}
+
+
+<!-- map.html -->

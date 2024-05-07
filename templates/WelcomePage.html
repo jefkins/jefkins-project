@@ -1,0 +1,36 @@
+<h1>This is a test page to show how to age pages</h1>
+
+<input type="text" value="" placeholder="Enter your full name" />
+
+
+<button>Submit</button>
+
+<!-- <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+</form> -->
+
+<!-- template.html -->
+<form id="myForm" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="text" id="selectedOptions" name="selectedOptions" readonly>
+    <button type="submit">Submit</button>
+</form>
+
+<!-- Include the following JavaScript code in your template -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var form = document.getElementById('myForm');
+        var dropdown = form.elements['options'];  // Replace 'options' with the name of your MultipleChoiceField
+        var selectedOptionsInput = document.getElementById('selectedOptions');
+    
+        // Event listener for the change event on the dropdown
+        dropdown.addEventListener('change', function() {
+            var selectedOptions = Array.from(dropdown.selectedOptions).map(option => option.value);
+            selectedOptionsInput.value = selectedOptions.join(', '); // Update the value of the input field
+        });
+    });
+    </script>
+    

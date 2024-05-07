@@ -1,0 +1,266 @@
+{% extends 'CareHomeDashboardTemplate.html' %}
+
+{% block Header %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Map</title>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    /* Custom CSS */
+    .card {
+      margin-bottom: 20px;
+    }
+    #map {
+        height: 400px;
+    }
+ 
+    .progress-bar {
+        width: 100%;
+        height: 20px;
+        background-color: #f2f2f2;
+        border-radius: 10px;
+        margin-bottom: 10px;
+    }
+    .progress-bar-inner {
+        height: 100%;
+        border-radius: 10px;
+        background-color: #007bff;
+    }
+</style>
+{% endblock %}
+
+
+
+
+
+
+{% block PageContent %}
+ 
+
+
+<script>
+    $(document).ready(function() {
+        // Initialize the progress bar with the default value
+        updateProgressBar($("#radius-slider").val());
+
+        // Attach event listener to the range slider
+        $("#radius-slider").on("input", function() {
+            var value = $(this).val();
+            console.log(value)
+            updateProgressBar(value);
+        });
+
+        // Function to update the progress bar width
+        function updateProgressBar(value) {
+            var progressBar = $("#progress-bar");
+            progressBar.css("width", value + "%");
+        }
+    });
+</script>
+
+ 
+
+
+<!-- <main class="content-wrapper">
+
+    <div id="map"></div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+var map = L.map('map').setView([51.505, -0.09], 13);  // Initialize map with default center and zoom level
+
+// Add tile layer (optional)
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+}).addTo(map);
+
+// Add markers for each manually created location
+var locations = {{ locations|safe }};  // Pass locations from Django view
+locations.forEach(function(location) {
+    var marker = L.marker([location.latitude, location.longitude]).addTo(map);
+    // Add popup (optional)
+    marker.bindPopup(location.name);
+});
+</script>
+  
+ 
+</main>
+
+<main class="content-wrapper">
+  <div class="mdc-layout-grid">
+    <div class="mdc-layout-grid__inner">
+      <div class="mdc-layout-grid__cell--span-12">
+        <div class="mdc-card">
+          {% if user.is_authenticated %}
+
+          <h6>Welcome {{user.username}} to your Care Home Dashboard</h4>
+
+            {% endif %}
+
+        </div>
+ -->
+
+
+
+
+
+ <main class="content-wrapper">
+  <div class="mdc-layout-grid">
+    
+
+ <div class="card">
+  <h5 class="card-header">Find Care Givers</h5>
+  <div class="card-body">
+    <p class="card-title">Select the filter options to find suitable Caregivers</p>
+    <!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+     -->
+
+   
+     {% if form.errors %}
+     <div class="alert alert-danger">
+         <strong>Error!</strong> Please correct the following errors:
+         <ul>
+             {% for field, errors in form.errors.items %}
+                 {% for error in errors %}
+                     <li>{{ error }}</li>
+                 {% endfor %}
+             {% endfor %}
+         </ul>
+     </div>
+ {% endif %}
+  <form method="post" action="careHomeSearch" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-row">
+      <div class="form-group col-md-12">
+        <p class="card-text"> <strong>Select Care Experience </strong></p>
+          <!-- <label for="id_care_options">Select Care Options:</label> -->
+          {% for option in form.care_options %}
+   
+    {{ option.tag }}  {{ option.choice_label }} &nbsp;&nbsp;&nbsp;
+  
+    {%endfor%} 
+       
+          <!-- {{ form.care_options }} -->
+      </div>
+      <div class="form-group col-md-12">
+        <!-- <label for="id_radius_search">Select Radius Search:</label> -->
+        <p class="card-text"> <strong>Select Location range </strong> </p>
+        <div class="progress-bar">
+          <div class="progress-bar-inner" id="progress-bar"></div>
+      </div>
+      
+      <input type="range" min="0" max="100" value="50" class="slider" id="radius-slider">
+      
+        {% for option in form.radius_search %}
+        
+          {{ option.tag }}  {{ option.choice_label }} &nbsp;&nbsp;&nbsp;
+    
+          {%endfor%} 
+        <!-- {{ form.radius_search }} -->
+    </div>
+      <div class="form-group col-md-6">
+        <p class="card-text"> <strong>Select Availability </strong></p>
+          <!-- <label for="id_availability">Select Availability:</label> -->
+          
+          {% for option in form.availability %}
+          
+            {{ option.tag }}  {{ option.choice_label }} &nbsp;&nbsp;&nbsp;
+         
+            {%endfor%} 
+          <!-- {{ form.availability }} -->
+      </div>
+      
+    </div>
+
+    <button class="mdc-button mdc-button--raised" type="submit">Search Care Givers</button>
+  
+</form>
+  </div>
+
+  <!-- <a href="#" class="btn btn-primary">Go back to Dashboard</a> -->
+</div>
+ 
+ 
+
+<div class="row">
+  {% if careGivers is None %}
+  <div class="card">
+  <p class="text-danger">No Care Givers found!</p>
+</div>
+  {% endif %}
+  {% for caregiver in careGivers %}  
+<div class="card col-lg-3">
+  <img src="../Media_Files/image.jpg" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">{{caregiver.first_name}} {{caregiver.last_name}}</h5>
+     <p>Care Experience: </p>
+     <p>Distance away: </p>
+  </div>
+   
+  <div class="card-body">
+    <a href="careGiverDetails/{{caregiver.userAuth_id}}" class="btn btn-primary">View Profile</a>
+    <a href="bookCareGiver/{{caregiver.userAuth_id}}" class="btn btn-primary">Book Caregiver</a>
+    
+  </div>
+</div>
+{% endfor %}
+
+</div>
+   
+
+    
+  </div>
+ </main>
+
+ 
+<!-- 
+
+ {% for caregiver in careGivers %}
+ <div class="mdc-layout-grid">
+  <h4>List of Care Givers</h4>
+ <div class="mdc-layout-grid__inner">
+  <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-4-tablet">
+    <div class="mdc-card info-card info-card--success">
+      <div class="card-inner">
+        <h5 class="card-title">Name: {{caregiver.first_name}}</h5>
+        <h5 class="font-weight-light pb-2 mb-1 border-bottom">Email: {{caregiver.email}}</h5>
+        <h5 class="font-weight-light pb-2 mb-1 border-bottom">Phone: {{caregiver.primary_phone_number}}</h5>
+        <h5 class="font-weight-light pb-2 mb-1 border-bottom">Address: {{caregiver.postCodeAddress}}</h5>
+        <hr>
+        <h5 class="font-weight-light pb-2 mb-1 border-bottom">Care Experience: </h5>
+        
+        <p class="tx-12 text-muted">Availability: {{caregiver.email}}</p>
+         <button>Contact</button>
+      </div>
+    </div>
+  </div>
+ </div>
+ </div>
+ {% endfor %} -->
+
+        
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+      
+ 
+         
+
+        
+
+
+
+
+     
+      </div>
+    </div>
+  </div>
+  </div>
+</main> 
+{% endblock %}
+
+
+<!-- map.html -->

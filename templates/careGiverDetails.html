@@ -1,0 +1,94 @@
+{% extends 'CareHomeDashboardTemplate.html' %}
+
+{% block Header %}
+
+{% endblock %}
+
+{% block PageContent %}
+ 
+
+
+<main class="content-wrapper">
+    <div class="mdc-layout-grid">
+<div class="row">
+ 
+  <div class="card">
+    
+ <div class="card-body">
+        <h4 class="card-header">Care Giver Profile</h4>
+    <div class="row">
+        <div class="col-lg-3 gt-2">
+            <h5 class="card-title">Bio Data</h5>
+            <form method="post" action="careGiverBioData" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mdc-layout-grid__inner">
+                  {% for field in Bioform %}
+                  
+                  <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                    <div class="mdc-text-field mdc-text-field--outlined">
+                        {{ field.label }} :  {{field.value}}
+ 
+                    </div>
+                  </div>
+               
+                  {% endfor %}
+    
+                  <!-- Submit Button -->
+                  
+                </div>
+              </form>
+        </div>
+        <div class="col-lg-3 gt-2">
+            <h5 class="card-title">Education</h5>
+            <form method="post" action="careGiverBioData" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mdc-layout-grid__inner">
+                  {% for field in Educationform %}
+                  
+                  <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                    <div class="mdc-text-field mdc-text-field--outlined">
+                        {{ field.label }} :  {{field.value}}
+ 
+                    </div>
+                  </div>
+                
+                  {% endfor %}
+    
+                  <!-- Submit Button -->
+                  
+                </div>
+              </form>
+        </div>
+        <div class="col-lg-3">
+            <h5 class="card-title">Experience</h5>
+            <form method="post" action="careGiverBioData" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mdc-layout-grid__inner">
+                  {% for field in Experienceform %}
+                  
+                  <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                    <div class="mdc-text-field mdc-text-field--outlined">
+                        {{ field.label }} :  {{field.value}}
+ 
+                    </div>
+                  </div>
+             
+                  {% endfor %}
+    
+                  <!-- Submit Button -->
+                  
+                </div>
+              </form>
+        </div>
+    </div>
+</div>
+    
+    <div class="card-body">
+      <a href="{% url 'bookCareGiver/{{caregiver.userAuth_id}}' %}" class="card-link btn btn-primary">Book Caregiver</a>
+      
+    </div>
+  </div>
+ 
+  
+  </div>
+  {% endblock %}

@@ -1,0 +1,145 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  {% block PageTitle %}
+  {% endblock %}
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="{% static 'dashboardassets/vendors/mdi/css/materialdesignicons.min.css' %}">
+  <link rel="stylesheet" href="{% static 'dashboardassets/vendors/css/vendor.bundle.base.css' %}">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- Layout styles -->
+  <link rel="stylesheet" href="{% static 'dashboardassets/css/demo/style.css' %}">
+  <!-- End layout styles -->
+  <link rel="shortcut icon" href="{% static 'dashboardassets/images/favicon.png' %}" />
+</head>
+<body>
+  <script src="{% static 'dashboardassets/js/preloader.js' %}"></script>
+  <div class="body-wrapper">
+    <div class="main-wrapper">
+      <div class="page-wrapper full-page-wrapper d-flex align-items-center justify-content-center">
+        <main class="auth-page">
+          <div class="mdc-layout-grid">
+            <div class="mdc-layout-grid__inner">
+              <div class="stretch-card mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-1-tablet"></div>
+              <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-6-tablet">
+              {% block PageContent %}
+              {% endblock %}
+              
+              
+                <!-- <div class="mdc-card">
+                  <form action="register" method="post" role="form">
+                    {% csrf_token %}
+                 
+                    <div class="mdc-layout-grid">
+                  
+        {% for message in messages %}
+        <p>{{message}}</p>
+        {% endfor %}
+                      <div class="mdc-layout-grid__inner">
+                        <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                          <div class="mdc-text-field w-100">
+                            <input name="firstName" class="mdc-text-field__input" id="text-field-hero-input">
+                            <div class="mdc-line-ripple"></div>
+                            <label for="text-field-hero-input" class="mdc-floating-label">First Name</label>
+                          </div>
+                        </div>
+                     
+                        <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                          <div class="mdc-text-field w-100">
+                            <input name="lastName" class="mdc-text-field__input" id="text-field-hero-input">
+                            <div class="mdc-line-ripple"></div>
+                            <label for="text-field-hero-input" class="mdc-floating-label">Last Name</label>
+                          </div>
+                        </div>
+                      
+                        <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                          <div class="mdc-text-field w-100">
+                            <input name="username" class="mdc-text-field__input" id="text-field-hero-input">
+                            <div class="mdc-line-ripple"></div>
+                            <label for="text-field-hero-input" class="mdc-floating-label">Username</label>
+                          </div>
+                        </div>
+                        <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                          <div class="mdc-text-field w-100">
+                            <input name="Email" class="mdc-text-field__input" type="email" id="text-field-hero-input">
+                            <div class="mdc-line-ripple"></div>
+                            <label for="text-field-hero-input" class="mdc-floating-label">Email</label>
+                          </div>
+                        </div>
+                      
+                        <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                          <div class="mdc-text-field w-100">
+                            <input name="password" class="mdc-text-field__input" type="password" id="text-field-hero-input">
+                            <div class="mdc-line-ripple"></div>
+                            <label for="text-field-hero-input" class="mdc-floating-label">Choose Password</label>
+                          </div>
+                        </div>
+                        <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                          <div class="mdc-text-field w-100">
+                            <input name="confirmPassword" class="mdc-text-field__input" type="password" id="text-field-hero-input">
+                            <div class="mdc-line-ripple"></div>
+                            <label for="text-field-hero-input" class="mdc-floating-label">Confirm Password</label>
+                          </div>
+                        </div>
+                        <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                          <div class="mdc-text-field w-100">
+                            <input name="phoneNumber" class="mdc-text-field__input" type="text" id="text-field-hero-input">
+                            <div class="mdc-line-ripple"></div>
+                            <label for="text-field-hero-input" class="mdc-floating-label">Phone Number</label>
+                          </div>
+                        </div>
+                        <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                          <div class="mdc-text-field w-100">
+                             <select name="accountType" class="mdc-text-field__input" id="text-field-hero-input">
+                              <option value="">--Select--</option>
+                              <option value="CareGiver">Care Giver</option>
+                              <option value="CareHome">Care Home</option>
+                            </select>
+                            <div class="mdc-line-ripple"></div>
+                            <label for="text-field-hero-input" class="mdc-floating-label">Account Type</label>
+                          </div>
+                        </div>
+                      
+                      
+                        <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+                         
+                          <input type="submit" class="mdc-button mdc-button--raised w-100" value="Register">
+                          
+                        </div>
+
+                        <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+                         
+                          <p>Already Have an Account? <a href="login" class="mdc-button mdc-button--raised w-100">Login Here</a></p>
+                            
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div> -->
+              </div>
+              <div class="stretch-card mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-1-tablet"></div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+   <!-- plugins:js -->
+   <script src="{% static 'dashboardassets/vendors/js/vendor.bundle.base.js' %}"></script>
+   <!-- endinject -->
+   <!-- Plugin js for this page-->
+   <!-- End plugin js for this page-->
+   <!-- inject:js -->
+   <script src="{% static 'dashboardassets/js/material.js' %}"></script>
+   <script src="{% static 'dashboardassets/js/misc.js' %}"></script>
+   <!-- endinject -->
+   <!-- Custom js for this page-->
+   <!-- End custom js for this page-->
+</body>
+</html>

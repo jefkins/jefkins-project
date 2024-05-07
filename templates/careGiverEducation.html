@@ -1,0 +1,59 @@
+{% extends 'Dashboard.html' %}
+
+{% block PageContent %}
+
+        <main class="content-wrapper">
+          <div class="mdc-layout-grid">
+            <div class="mdc-layout-grid__inner">
+              <div class="mdc-layout-grid__cell--span-12">
+                <div class="mdc-card">
+                  <h6 class="card-title">Profile Update</h6>
+                  <p>Please fill in the required details to update your profile</p>
+                  <div class="template-demo">
+                    <a href="careGiverBioData" class="mdc-button mdc-button--raised">
+                      Bio Data
+                    </a>
+                    <a href="careGiverEducation" class="mdc-button active mdc-button--raised">
+                      Education
+                    </a>
+                    <a href="careGiverWorkType" class="mdc-button mdc-button--raised">
+                      Work Type
+                    </a>
+
+                    {% for message in messages %}
+                    <p>{{message}}</p>
+                    {% endfor %}
+                    {% for error in form.errors %}
+                    <p>{{error}}</p>
+                    {% endfor %}
+
+                    <form method="post" action="careGiverEducation" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      <div class="mdc-layout-grid__inner">
+                        {% for field in form %}
+                        <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                          <div class="mdc-text-field mdc-text-field--outlined">
+                            {{field}}
+                            <div class="mdc-notched-outline">
+                              <div class="mdc-notched-outline__leading"></div>
+                              <div class="mdc-notched-outline__notch">
+                                <label for="{{ field.id_for_label }}" class="mdc-floating-label">{{field.label}}</label>
+                              </div>
+                              <div class="mdc-notched-outline__trailing"></div>
+                            </div>
+                          </div>
+                        </div>
+                        {% endfor %}
+ 
+                        <!-- Submit Button -->
+                        <button type="submit" class="mdc-button mdc-button--raised">Save</button>
+                      </div>
+                    </form>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      {% endblock %}
