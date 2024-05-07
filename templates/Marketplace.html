@@ -73,10 +73,10 @@
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
           <li><a class="nav-link scrollto active" href="/">Home</a></li>
-          <li><a class="nav-link scrollto active" href="marketplace">Marketplace</a></li>
-          <li><a class="nav-link scrollto" href="#hero">Register</a></li>
+          <li><a class="nav-link scrollto" href="marketplace">Marketplace</a></li>
+          <li><a class="nav-link scrollto" href="login">Register</a></li>
           <li><a class="nav-link scrollto" href="login">Login</a></li>
-          
+         
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -85,17 +85,40 @@
     </div>
   </header><!-- End Header -->
 
-  <!-- ======= Hero Section ======= -->
-  <section id="hero" class="d-flex align-items-center">
-    <div class="container">
-      <h1 style="color: rgb(43, 54, 204);" >You are Welcome to Care Marketplace System</h1>
-      <h2>An MSc Dissertation project by Jefkins Nwabenu</h2>
-      <a href="registerCareHome" class="btn-get-started scrollto">Register as a CareHome</a> |  <a href="registerCareGiver" class="btn-get-started scrollto">Register as a Care Giver</a>
-    </div>
-  </section><!-- End Hero -->
+  {% if locations %}
+
+ 
+
+  {% endif %}
+ 
 
   <main id="main">
+    <div>
+      <h4>Welcome to Care Marketplace</h4>
+      <p>Find Care Home and Care Givers closest to you.</p>
+      <div id="map" style="height: 680px;"></div>
+  
+      <script>
+          var map = L.map('map').setView([51.505, -0.09], 13);
+      
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+              attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          }).addTo(map);
+      
+          // Loop through locations and add markers to the map
+            // Parse the locations JSON passed from Django
+    var locations = JSON.parse('{{ locations_json|escapejs }}');
 
+// Loop through locations and add markers to the map
+locations.forEach(function(location) {
+    L.marker([location.fields.postCodeLatitude, location.fields.postCodeLongitude]).addTo(map)
+        .bindPopup(location.fields.first_name);
+});
+      </script>
+  
+    </div>
+     
+    </main>
     <!-- ======= Why Us Section ======= -->
     <!-- <section id="why-us" class="why-us">
       <div class="container">
@@ -148,9 +171,7 @@
     
 
 
-   
-   
-  </main><!-- End #main -->
+ <!-- End #main -->
 
   <!-- ======= Footer ======= -->
   <footer id="footer">

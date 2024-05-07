@@ -9,6 +9,7 @@ urlpatterns = [
     path('registerCareHome', accountsView.registerCareHome, name='registerCareHome'), 
     path('login', accountsView.loginAccount, name='login'),
     path('logout', accountsView.logoutAccount, name='logout'),
+    path('marketplace', accountsView.marketplace, name='marketplace'),
     path('careGiverDashboard', careGiverView.careGiverDashboard, name='careGiverDashboard'), 
     path('careGiverBioData', careGiverView.careGiverBiodata, name='careGiverBioData'),
     path('careGiverEducation', careGiverView.careGiverEducation, name='careGiverEducation'),

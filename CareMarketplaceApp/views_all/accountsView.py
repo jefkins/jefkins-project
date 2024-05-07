@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages 
+from django.core.serializers import serialize
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -155,3 +156,39 @@ def loginAccount(request):
 def logoutAccount(request):
     logout(request)
     return redirect('login')
+
+def marketplace(request):
+    locations = []
+    all_CareGivers = CareGiverBioDataProfile.objects.all()
+    all_CareHomes = CareHomeProfile.objects.all()
+
+    print(all_CareGivers)
+    print(all_CareHomes)
+     
+    for caregiver in all_CareGivers:
+        # Check if both latitude and longitude are not None
+        if caregiver.postCodeLatitude is not None and caregiver.postCodeLongitude is not None:
+            location = {
+                'name': caregiver.first_name,
+                'latitude': float(caregiver.postCodeLatitude),
+                'longitude': float(caregiver.postCodeLongitude)
+            }
+            locations.append(location)
+    print (locations)
+
+    for careHome in all_CareHomes:
+        # Check if both latitude and longitude are not None
+        if careHome.postCodeLatitude is not None and careHome.postCodeLongitude is not None:
+            location = {
+                'name': careHome.name_0f_care_home,
+                'latitude': float(careHome.postCodeLatitude),
+                'longitude': float(careHome.postCodeLongitude)
+            }
+            locations.append(location)
+     
+    locations_json = serialize('json', all_CareGivers, fields=('first_name', 'postCodeLatitude', 'postCodeLongitude'))
+ 
+
+    print ('locations')
+    print (location)
+    return render(request, 'Marketplace.html', {'locations': locations, 'locations_json': locations_json})
