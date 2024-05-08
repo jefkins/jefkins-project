@@ -7,6 +7,8 @@
 
 {%block PageContent %}
 <div class="mdc-card">
+  <h2>Centralized Care Marketplace System</h2>
+<p>An MSc Project done by Jefkins Nwabenu </p>
   <h3>Register Care Giver</h3>
                   <form action="registerCareGiver" method="post" role="form">
                     {% csrf_token %}
@@ -92,7 +94,11 @@
                           <p>Already Have an Account? <a href="login" class="mdc-button mdc-button--raised w-100">Login Here</a></p>
                             
                         </div>
-                        <p><a href="">Go back to Home</a></p>
+                        <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+                         
+                          <a href="/" class="mdc-button mdc-button--raised w-100">Return to Home </a></p>
+                        
+                       </div>
                       </div>
                     </div>
                   </form>

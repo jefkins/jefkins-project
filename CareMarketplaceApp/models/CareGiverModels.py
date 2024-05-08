@@ -27,7 +27,6 @@ class CareGiverBioDataProfile(models.Model):
     profile_picture = models.ImageField(upload_to='Media_Files/profile_pictures/', blank=True, null=True)
     
     address = models.CharField(max_length=255, blank=True, null=True)
-    #country = CountryField()
     country = models.CharField(max_length=100, blank=True, null=True)
     state = models.CharField(max_length=100, blank=True, null=True)
     city = models.CharField(max_length=100, blank=True, null=True)
@@ -61,8 +60,9 @@ class CareGiverEducationProfile(models.Model):
 
  
     def __str__(self):
-        #return f"{self.userAuth.get_username}"
+
         return f"{self.userAuth.username}"
+
 
 class CareGiverWorkExperienceProfile(models.Model):
     CARE_CHOICES = [
