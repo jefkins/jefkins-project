@@ -24,20 +24,19 @@ def registerCareGiver(request):
 
         if password != confirmPassword:
             messages.info(request, 'Password and Confirm Password Mismatch')
-            return render(request, 'RegisterCareGiver.html')
+            return render(request, 'RegisterCareGiver.html', {'firstName': firstName, 'lastName': lastName, 'username': username, 'Email': email})
     
         if User.objects.filter(email=email).exists():
             messages.info(request, 'Email Already exists')
-            return render(request, 'RegisterCareGiver.html', )
+            return render(request, 'RegisterCareGiver.html', {'firstName': firstName, 'lastName': lastName, 'username': username, 'Email': email} )
         
         if User.objects.filter(username=username).exists():
             messages.info(request, 'Username Already exists')
-            return render(request, 'RegisterCareGiver.html', )
+            return render(request, 'RegisterCareGiver.html', {'firstName': firstName, 'lastName': lastName, 'username': username, 'Email': email} )
         
         if accountType == '':
             messages.info(request, 'Please select an Account Type')
-            return render(request, 'RegisterCareGiver.html', )
-
+            return render(request, 'RegisterCareGiver.html', {'firstName': firstName, 'lastName': lastName, 'username': username, 'Email': email} )
         
         newUser = User.objects.create_user(username,email,password)
         
@@ -45,19 +44,10 @@ def registerCareGiver(request):
             newUser.first_name = firstName
             newUser.last_name = lastName
             newUser.save()
-
-
-
             careGiverProfile, newCareGiverCreated = CareGiverBioDataProfile.objects.get_or_create(userAuth=newUser)
             careGiverProfile.userType = accountType
             careGiverProfile.dateCreated = datetime.now()
             careGiverProfile.save()
-
-            # careGiverEducation = CareGiverEducationProfile.objects.create(userAuth=newUser)
-            # careGiverEducation.save()
-
-            
-            
 
             messages.info(request, 'Account Creation Successful! Please Login')
             
@@ -65,7 +55,7 @@ def registerCareGiver(request):
            
         else:
             messages.info(request, 'Account not created. An Error Occurred! Try Again!')
-            return render(request, 'RegisterCareGiver.html')
+            return render(request, 'RegisterCareGiver.html', {'firstName': firstName, 'lastName': lastName, 'username': username, 'Email': email})
 
    return render(request, 'RegisterCareGiver.html')
 

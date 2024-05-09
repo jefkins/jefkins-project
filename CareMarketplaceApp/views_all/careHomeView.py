@@ -70,24 +70,20 @@ def careHomeSearch(request):
             print(availability)
             print(radius_search)
            
-            # selected_Care_Options = form.cleaned_data['care_options']
-            # print(selected_Care_Options)
+    
             careHome = CareHomeProfile.objects.get(userAuth=request.user)
             print(careHome)
             care_home_lat = careHome.postCodeLatitude
             care_home_lon = careHome.postCodeLongitude
             careGiversFound = matchCarehomeToCareGiver(care_home_lon, care_home_lat, radius_search, None, care_options, None )
             
-            # careTypes = getListOfCareTypes()
-            # print(careTypes)
-          
             print('Caregiver final')
             print(careGiversFound)
 
             locations = []
-    # Iterate through profiles to create location dictionary for each profile
+   
             for profile in careGiversFound:
-                # Check if both latitude and longitude are not None
+              
                 if profile.postCodeLatitude is not None and profile.postCodeLongitude is not None:
                     location = {
                         'name': profile.first_name,
@@ -121,23 +117,6 @@ def careHomeSearch(request):
 
 
 
-        # locations = [
-        #     {'name': 'Location 1', 'latitude': 51.505, 'longitude': -0.09},
-        #     {'name': 'Location 2', 'latitude': 51.51, 'longitude': -0.1},
-        #     {'name': 'Location 3', 'latitude': 51.52, 'longitude': -0.11},
-        #     ]
-        # #careGiversFound = None
-        # careHome = CareHomeProfile.objects.get(userAuth=request.user)
-        # print(careHome)
-        # care_home_lat = careHome.postCodeLatitude
-        # care_home_lon = careHome.postCodeLongitude
-
-        # careTypes = getListOfCareTypes()
-        # print(careTypes)
-        # careGiversFound = matchCarehomeToCareGiver(care_home_lon, care_home_lat, 1, None, careTypes, None )
-        # print('Caregiver final')
-        # print(careGiversFound)
-        #return render(request, 'careHomeSearch.html', {'locations': locations, 'careGivers': careGiversFound}) 
 
 @login_required(login_url='login')
 def bookCareGiver(request, user_id=None):
@@ -171,23 +150,3 @@ def careGiverDetails(request, user_id=None):
     return render(request, 'careGiverDetails.html', {'caregiver': careGiver, 'Bioform': form, 'Experienceform': Experienceform, 'Educationform': Educationform  })
 
 
-
-# views.py
-
-#def search_caregivers(request):
-    # Retrieve care home location from the request or wherever it's available
-    
-    # Call the find_nearby_caregivers function
-    #nearby_caregivers = find_nearby_caregivers(care_home_lat, care_home_lon)
-    
-    # Process the results and return the response
-    # ...
-
-    
-   # locations = Location.objects.all()  # Assuming Location is your model with longitude and latitude fields
-    # locations = [
-    #     {'name': 'Location 1', 'latitude': 51.505, 'longitude': -0.09},
-    #     {'name': 'Location 2', 'latitude': 51.51, 'longitude': -0.1},
-    #     {'name': 'Location 3', 'latitude': 51.52, 'longitude': -0.11},
-         
-    # ]
